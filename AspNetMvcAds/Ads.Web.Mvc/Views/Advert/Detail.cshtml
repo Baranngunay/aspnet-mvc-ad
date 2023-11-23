@@ -1,0 +1,175 @@
+﻿@model AdvertDetailViewModel
+@{
+	ViewData["Title"] = "Advert Detail";
+	
+
+}
+
+@await Html.PartialAsync("_SearchPartial")
+@{
+	var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+	<div class="alert alert-success">@successMessage</div>
+}
+
+@if (Model == null)
+{
+	<p> Product is not found !! </p>
+}
+else
+{
+	<!--===================================
+	=            Store Section            =
+	====================================-->
+	<section class="section bg-gray">
+		<!-- Container Start -->
+		<div class="container">
+			<div class="row">
+				<!-- Left sidebar -->
+				<div class="col-md-8">
+					<div class="product-details">
+						<h1 class="product-title">@Model.Title</h1>
+						<div class="product-meta">
+							<ul class="list-inline">
+								<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="">@Model.User.Name</a></li>
+								<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">@Model.CategoryName</a></li>
+								<li class="list-inline-item"><i class="fa fa-calendar-o"></i> Created At<a href="">@Model.CreatedAt.ToString("dd-MM-yyyy")</a></li>
+							</ul>
+						</div>
+
+						<!-- product slider -->
+						<div class="product-slider">
+							@foreach (var item in Model.ImagePaths)
+							{
+								bool firstImage = Model.ImagePaths[0] == item;
+
+								<div class="product-slider-item my-4" data-image="@item">
+									<img class="@(firstImage ? "" : "d-block") img-fluid w-100" src="@item" alt="product-img">
+								</div>
+							}
+						</div>
+						<!-- product slider -->
+
+						<div class="content mt-5 pt-5">
+							<ul class="nav nav-pills  justify-content-center" id="pills-tab" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+									   aria-selected="true">Product Details</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
+									   aria-selected="false">Comments</a>
+								</li>
+							</ul>
+							<div class="tab-content" id="pills-tabContent">
+								<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+									<h3 class="tab-title">Product Description</h3>
+									<p>
+										@Model.Description
+									</p>
+
+								</div>
+								
+								<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+									<h3 class="tab-title">Product Review</h3>
+									
+									<div class="product-review">
+										@foreach (var comments in Model.AdvertComments)
+										{
+											<div class="media">
+												<!-- Avater -->
+												<img src="~/images/user/user-thumb.jpg" alt="avater">
+												<div class="media-body">
+													<!-- Ratings -->
+													<div class="ratings">
+														<ul class="list-inline">
+															@for (int i = 0; i < Model.StarCount; i++)
+															{
+																<li class="list-inline-item">
+																	<i class="fa fa-star"></i>
+																</li>
+
+															}
+
+														</ul>
+													</div>
+													<div class="name">
+														<h5>@comments.UserName</h5>
+													</div>
+													<div class="date">
+														<p>@comments.CreatedAt</p>
+													</div>
+													<div class="review-comment">
+														<p>
+															@comments.Comment
+														</p>
+													</div>
+												</div>
+											</div>
+										}
+										@if (!User.Identity.IsAuthenticated)
+										{
+											<p>Please login to comment. </p>
+										}
+										else
+										{
+											<div class="review-submission">
+												<h3 class="tab-title">Submit your review</h3>
+												<!-- Rate -->
+												<div class="rate">
+													<div class="starrr"></div>
+												</div>
+												<div class="review-submit">
+													<form asp-controller="Advert" asp-action="Comment" class="row" method="post">
+														<input type="hidden" asp-for="Id" value="@Model.Id">
+														<div class="col-12">
+															<textarea name="review" id="review" rows="10" class="form-control" placeholder="Message"></textarea>
+														</div>
+														<div class="col-12">
+															<button type="submit" class="btn btn-main">Sumbit</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										}
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="sidebar">
+						<div class="widget price text-center">
+							<h4>Price</h4>
+							<p>@Model.Price.ToString("C")</p>
+						</div>
+						<!-- User Profile widget -->
+						<div class="widget user text-center">
+							<img class="rounded-circle img-fluid mb-5 px-5" src="~/images/user/user-thumb.jpg" alt="">
+							<h4>@Model.User.Name</h4>
+							<p class="member-time">Member Since @Model.User.CreatedAt.ToString("dd-MM-yyyy")</p>
+						</div>
+						<div class="widget user contact-center">
+							<p class="E-mail"><b>E-mail: </b> @Model.User.NewEmail</p>
+							<p class="fa-blender-phone"><b>Phone Number: </b> @Model.User.Phone</p>
+						</div>
+						<!-- Map Widget -->
+						<div class="widget map">
+							<div class="map">
+								<div id="map_canvas" data-latitude="51.507351" data-longitude="-0.127758"></div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- Container End -->
+	</section>
+}

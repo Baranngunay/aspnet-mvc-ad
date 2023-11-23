@@ -1,0 +1,8 @@
+﻿@model List<AdvertViewModel>
+@{
+    ViewData["Title"] = "Categories";
+}
+
+@await Html.PartialAsync("_SearchPartial")
+
+@await Html.PartialAsync("_AdvertListPartial", Model)

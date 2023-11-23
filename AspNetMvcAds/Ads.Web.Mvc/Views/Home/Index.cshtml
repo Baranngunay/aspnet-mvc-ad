@@ -1,0 +1,12 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+@await Html.PartialAsync("_HeroAreaPartial")
+
+@await Component.InvokeAsync("PopularDeal")
+
+@await Html.PartialAsync("_CategoriesPartial", Model.Categories)
+
+@await Html.PartialAsync("_CallToActionPartial")

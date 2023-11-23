@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SITE TITTLE -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - Ads.Web.Mvc</title>
+
+    <!-- FAVICON -->
+    <link href="img/favicon.png" rel="shortcut icon">
+    <!-- PLUGINS CSS STYLE -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/plugins/bootstrap/css/bootstrap-slider.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="~/plugins/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="~/plugins/slick-carousel/slick/slick-theme.css">
+    <!-- Fancy Box -->
+    <link rel="stylesheet" href="~/plugins/fancybox/jquery.fancybox.pack.css">
+    <link rel="stylesheet" href="~/plugins/jquery-nice-select/css/nice-select.css">
+    <!-- CUSTOM CSS -->
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="body-wrapper">
+ @*    @if (Context.User.Identity.IsAuthenticated)
+    {
+        <span class="nav-link text-dark">Welcome @Context.User.Identity.Name</span>
+    } *@
+    @await Component.InvokeAsync("Navbar")
+
+    @RenderBody()
+
+    @await Html.PartialAsync("_FooterPartial")
+
+    <!-- JAVASCRIPTS -->
+    <script src="~/plugins/jQuery/jquery.min.js"></script>
+    <script src="~/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/plugins/bootstrap/js/bootstrap-slider.js"></script>
+    <!-- tether js -->
+    <script src="~/plugins/tether/js/tether.min.js"></script>
+    <script src="~/plugins/raty/jquery.raty-fa.js"></script>
+    <script src="~/plugins/slick-carousel/slick/slick.min.js"></script>
+    <script src="~/plugins/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/plugins/fancybox/jquery.fancybox.pack.js"></script>
+    <script src="~/plugins/smoothscroll/SmoothScroll.min.js"></script>
+    <!-- google map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
+    <script src="~/plugins/google-map/gmap.js"></script>
+    <script src="~/js/script.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
